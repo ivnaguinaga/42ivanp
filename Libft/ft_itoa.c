@@ -1,0 +1,70 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iaguinag <iaguinag@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/16 19:57:54 by iaguinag          #+#    #+#             */
+/*   Updated: 2023/05/22 18:44:05 by iaguinag         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+static int	digitcount(int n)
+{
+	int				i;
+	unsigned int	n2;
+
+	i = 0;
+	if (n == 0)
+		return (1);
+	if (n > 0)
+		n2 = (unsigned int)n;
+	else
+		n2 = (unsigned int)(n * -1);
+	while (n2 > 0)
+	{
+		n2 = n2 / 10;
+		i++;
+	}
+	return (i);
+}
+
+char	*ft_itoa(int n)
+{
+	char			*nbr;
+	int				i;
+	int				sign;
+	unsigned int	n2;
+
+	sign = 0;
+	i = digitcount(n);
+	if (n < 0)
+		sign = 1;
+	if (n < 0)
+		n2 = (unsigned int)(n * -1);
+	else
+		n2 = (unsigned int)n;
+	nbr = malloc((i + sign + 1) * sizeof(char));
+	if (!(nbr))
+		return (0);
+	nbr[i + sign--] = '\0';
+	while (i + sign >= sign + 1)
+	{
+		nbr[i-- + sign] = (n2 % 10) + '0';
+		n2 /= 10;
+	}
+	if (sign == 0)
+		nbr[i] = '-';
+	return (nbr);
+}
+/*
+int	main(void)
+{
+	char *c = ft_itoa(-2147483647 -1);
+	printf("%s", c);
+}
+*/
